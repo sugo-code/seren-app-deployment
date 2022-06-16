@@ -1,5 +1,5 @@
-resource "azurerm_cosmosdb_account" "sugocode-cosmosdb-db1" {
-  name                = "sugocode-cosmosdb-db1"
+resource "azurerm_cosmosdb_account" "sugocode-cosmosdb-account-table" {
+  name                = "sugocode-cosmosdb-account-table"
   location            = "West US"
   resource_group_name = azurerm_resource_group.resource-group.name
   offer_type          = "Standard"
@@ -20,9 +20,9 @@ resource "azurerm_cosmosdb_account" "sugocode-cosmosdb-db1" {
   }
 }
 
-resource "azurerm_cosmosdb_table" "sugocode-account-table" {
-  name                = "sugocode-account-table"
-  resource_group_name = azurerm_cosmosdb_account.sugocode-cosmosdb-db1.resource_group_name
-  account_name        = azurerm_cosmosdb_account.sugocode-cosmosdb-db1.name
+resource "azurerm_cosmosdb_table" "sugocode-table" {
+  name                = "sugocode-db-table"
+  resource_group_name = azurerm_cosmosdb_account.sugocode-cosmosdb-account-table.resource_group_name
+  account_name        = azurerm_cosmosdb_account.sugocode-cosmosdb-account-table.name
   throughput          = 400
 }

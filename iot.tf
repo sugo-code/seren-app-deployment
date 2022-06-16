@@ -1,6 +1,6 @@
 resource "azurerm_storage_container" "sugocode-sc" {
   name                  = "sugocode-sc"
-  storage_account_name  = azurerm_storage_account.storage-account.name
+  storage_account_name  = azurerm_storage_account.sugocode-storage-account.name
   container_access_type = "private"
 }
 
@@ -40,7 +40,7 @@ resource "azurerm_iothub" "sugocode-iothub" {
 
   endpoint {
     type                       = "AzureIotHub.StorageContainer"
-    connection_string          = azurerm_storage_account.storage-account.primary_blob_connection_string
+    connection_string          = azurerm_storage_account.sugocode-storage-account.primary_blob_connection_string
     name                       = "export"
     batch_frequency_in_seconds = 60
     max_chunk_size_in_bytes    = 10485760
@@ -81,9 +81,5 @@ resource "azurerm_iothub" "sugocode-iothub" {
       max_delivery_count = 15
       lock_duration      = "PT30S"
     }
-  }
-
-  tags = {
-    purpose = "testing"
   }
 }

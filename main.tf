@@ -16,7 +16,7 @@ resource "azurerm_resource_group" "resource-group" {
   location = "West Europe"
 }
 
-resource "azurerm_storage_account" "storage-account" {
+resource "azurerm_storage_account" "sugocode-storage-account" {
   name                     = "sugocode"
   resource_group_name      = azurerm_resource_group.resource-group.name
   location                 = azurerm_resource_group.resource-group.location
