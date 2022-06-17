@@ -24,3 +24,17 @@ resource "azurerm_cosmosdb_sql_database" "sugocode-db-sql" {
   account_name        = azurerm_cosmosdb_account.sugocode-cosmosdb-account-sql.name
   throughput          = 400
 }
+
+resource "azurerm_cosmosdb_sql_container" "sugocode-db-sql-container" {
+  name                  = "example-container"
+  resource_group_name   = azurerm_cosmosdb_account.sugocode-cosmosdb-account-sql.resource_group_name
+  account_name          = azurerm_cosmosdb_account.sugocode-cosmosdb-account-sql.name
+  database_name         = azurerm_cosmosdb_sql_database.sugocode-db-sql.name
+  partition_key_path    = "/definition/id"
+  partition_key_version = 1
+  throughput            = 400
+
+  unique_key {
+    paths = ["/definition/idlong", "/definition/idshort"]
+  }
+}
