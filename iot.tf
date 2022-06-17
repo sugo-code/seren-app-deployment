@@ -49,24 +49,22 @@ resource "azurerm_iothub" "sugocode-iothub" {
     file_name_format           = "{iothub}/{partition}_{YYYY}_{MM}_{DD}_{HH}_{mm}"
   }
 
-  route = [
-    {
-      name           = "export"
-      source         = "DeviceMessages"
-      condition      = "true"
-      endpoint_names = ["export"]
-      enabled        = true
-    },
-    {
-      condition      = "true"
-      enabled        = true
-      endpoint_names = [
-          "eventgrid"
-        ]
-      name           = "RouteToEventGrid"
-      source         = "DeviceMessages"
-    },
-  ]
+  route {
+    name           = "export"
+    source         = "DeviceMessages"
+    condition      = "true"
+    endpoint_names = ["export"]
+    enabled        = true
+  }
+
+  route {
+    condition      = "true"
+    enabled        = true
+    endpoint_names = ["eventgrid",]
+    name           = "RouteToEventGrid"
+    source         = "DeviceMessages"
+  }
+
   enrichment {
     key            = "tenant"
     value          = "$twin.tags.Tenant"
