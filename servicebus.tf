@@ -8,6 +8,4 @@ resource "azurerm_servicebus_namespace" "sugocode-servicebus-ns" {
 resource "azurerm_servicebus_queue" "sugocode-servicebus-queue" {
   name         = "sugocode-servicebus-queue"
   namespace_id = azurerm_servicebus_namespace.sugocode-servicebus-ns.id
-
-#  enable_partitioning = true
 }

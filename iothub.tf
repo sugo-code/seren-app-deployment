@@ -15,14 +15,9 @@ resource "azurerm_iothub" "sugocode-iothub" {
   }
 
   endpoint {
-    type                       = "AzureIotHub.StorageContainer"
-    connection_string          = azurerm_storage_account.sugocode-storage-account.primary_blob_connection_string
+    type                       = "AzureIotHub.EventHub"
     name                       = "eventshub-endpoint"
-    batch_frequency_in_seconds = 60
-    max_chunk_size_in_bytes    = 10485760
-    container_name             = azurerm_storage_container.sugocode-sc.name
-    encoding                   = "Avro"
-    file_name_format           = "{iothub}/{partition}_{YYYY}_{MM}_{DD}_{HH}_{mm}"
+    connection_string          = azurerm_eventhub_authorization_rule.sugocode-hub-rule.primary_connection_string
   }
 
   route = [
