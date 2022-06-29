@@ -4,8 +4,6 @@ resource "azurerm_cosmosdb_account" "sugocode-cosmosdb-account-sql" {
   resource_group_name = azurerm_resource_group.resource-group.name
   offer_type          = "Standard"
 
-  local_authentication_disabled = true
-
   consistency_policy {
     consistency_level       = "BoundedStaleness"
     max_interval_in_seconds = 300
