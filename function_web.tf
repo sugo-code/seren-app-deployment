@@ -6,5 +6,11 @@ resource "azurerm_windows_web_app" "sugocode-web-app" {
 
   site_config {
     always_on           = false
+
+    virtual_application {
+      physical_path = "site\\wwwroot"
+      preload       = false
+      virtual_path  = "/"
+    }
   }
 }
