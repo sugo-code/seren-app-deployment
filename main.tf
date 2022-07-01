@@ -22,8 +22,4 @@ resource "azurerm_storage_account" "sugocode-storage-account" {
   location                 = azurerm_resource_group.resource-group.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
-
-  tags = {
-    environment = "prd"
-  }
 }

@@ -1,32 +1,22 @@
-resource "azurerm_linux_function_app" "sugocode-fn-collector" {
-  name                = "sugocode-fn-collector"
-  resource_group_name = azurerm_resource_group.resource-group.name
-  location            = azurerm_resource_group.resource-group.location
-
-  storage_account_name = azurerm_storage_account.sugocode-storage-account.name
-  service_plan_id      = azurerm_service_plan.sugocode-svc-plan.id
-
-  site_config {}
+locals {
+  name = ["alarms", "collector"]
 }
 
-resource "azurerm_linux_function_app" "sugocode-fn-alarms" {
-  name                = "sugocode-fn-alarms"
+resource "azurerm_service_plan" "sugocode-svc-plan-app" {
+  name                = "sugocode-svc-plan-app"
   resource_group_name = azurerm_resource_group.resource-group.name
   location            = azurerm_resource_group.resource-group.location
-
-  storage_account_name = azurerm_storage_account.sugocode-storage-account.name
-  service_plan_id      = azurerm_service_plan.sugocode-svc-plan.id
-
-  site_config {}
+  os_type             = "Windows"
+  sku_name            = "Y1"
 }
 
-resource "azurerm_linux_function_app" "sugocode-fn-reports" {
-  name                = "sugocode-fn-reports"
-  resource_group_name = azurerm_resource_group.resource-group.name
-  location            = azurerm_resource_group.resource-group.location
+resource "azurerm_linux_function_app" "sugocode-fn" {
+  for_each = toset(local.name)
 
-  storage_account_name = azurerm_storage_account.sugocode-storage-account.name
-  service_plan_id      = azurerm_service_plan.sugocode-svc-plan.id
-
+  name                      = "sugocode-fn-${each.value}"
+  resource_group_name       = azurerm_resource_group.resource-group.name
+  location                  = azurerm_resource_group.resource-group.location
+  service_plan_id           = azurerm_service_plan.sugocode-svc-plan-app.id
+  storage_account_name      = azurerm_storage_account.sugocode-storage-account.name
   site_config {}
 }
