@@ -1,5 +1,5 @@
 locals {
-  name = ["alarms", "collector"]
+  function = ["alarms", "collector", "reports"]
 }
 
 resource "azurerm_service_plan" "sugocode-svc-plan-app" {
@@ -11,7 +11,7 @@ resource "azurerm_service_plan" "sugocode-svc-plan-app" {
 }
 
 resource "azurerm_linux_function_app" "sugocode-fn" {
-  for_each = toset(local.name)
+  for_each = toset(local.function)
 
   name                      = "sugocode-fn-${each.value}"
   resource_group_name       = azurerm_resource_group.resource-group.name
